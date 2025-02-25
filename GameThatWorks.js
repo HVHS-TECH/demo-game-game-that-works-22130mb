@@ -3,11 +3,11 @@
 // Move sprite towards the mouse' position
 // Written by max
 /*******************************************************/
-  
+let timer = 10
 /*******************************************************/
 // setup()
 /*******************************************************/
-    function setup() {
+function setup() {
 	console.log("setup: ");
 	cnv = new Canvas(1000, 1000);
 	wallLH = new Sprite(0, 1000, 15, 2000, 'k');
@@ -18,27 +18,26 @@
 	wallRH.color = 'white';
 	wallTop.color = 'white';
 	wallBot.color = 'white';
-	shape = new Sprite(400, 400, 200, 200, 'd');
+	shape = new Sprite(400, 400, 10, 10, 'd');
 	shape.color = 'white';
 	world.gravity.y = 5;
 	shape.bounciness = 1;
 	alienGroup = new Group();
 	for (i = 0; i < 5; i++) {
 		alien = new Sprite(100, 100, 50, 50, 'd');
-		alien.vel.x = 5;
-		alien.vel.y = 5;
-		alien.bounciness = 0.5;
+		alien.vel.x = 2;
+		alien.vel.y = 2;
+		alien.bounciness = 3;
 		alien.friction = 1;
 		alienGroup.add(alien);
 	}
 	alienGroup.collides(shape, func2Call);
 	function func2Call(shape, alien) {
+		
+		shape.remove();
+		
+	}  
 
-		// Delete the alien which was hit
-		
-	shape.remove();
-		
-		}  
 }
 	
 /*******************************************************/
@@ -49,20 +48,28 @@ function draw() {
 	
 	shape.moveTowards(mouseX, mouseY, 1);
 
-if (mouse.presses()) {
+	if (mouse.presses()) {
 
-shape.moveTo(xPos, yPos, 100);
+		shape.moveTo(xPos, yPos, 100);
+
+	}
+	background('black');
+	text("TIMER", 200, 100) 	
+	textSize(25);
+	fill('red');
+	textAlign(CENTER, CENTER);
+	textSize(100);
+	text(timer, 0, 0, 100,100);
+	if (frameCount % 60 == 0 && timer > 0) {
+		timer --;
+	}
+	if (timer == 0) {
+		text("YOU WIN", width/2, height*0.7);
+	}
 
 }
-background('black');
-text("WELCOME TO HORDE RUSH", 50, 50) 	
-textSize(25);
-fill('red');
+  
 
-alien.visible = false;
-text("you won")
- 
-}
 
 /*******************************************************/
 //  END OF APP
